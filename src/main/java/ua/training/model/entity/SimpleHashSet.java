@@ -1,6 +1,5 @@
-package ua.training;
+package ua.training.model.entity;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

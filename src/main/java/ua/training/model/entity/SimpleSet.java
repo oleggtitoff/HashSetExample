@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.model.entity;
 
 import java.util.Iterator;
 
