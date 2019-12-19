@@ -90,9 +90,35 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
         return 0;
     }
 
-    private static class Entry<E> {
+    static class Entry<E> {
         E key;
         Entry<E> next;
+    }
+
+    public class SimpleHashSetIterator implements Iterator {
+        private int currentBucket = -1;
+        private int previousBucket = -1;
+        private Entry currentEntry = null;
+        private Entry previousEntry = null;
+
+        @Override
+        public boolean hasNext() {
+            if (currentEntry != null && currentEntry.next != null) {
+                return true;
+            }
+
+            for (int index = currentBucket+1; index < buckets.length; index++) {
+                if (buckets[index] != null) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return null;
+        }
     }
 
 }
