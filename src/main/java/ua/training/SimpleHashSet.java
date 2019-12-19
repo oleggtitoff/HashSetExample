@@ -83,7 +83,7 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
 
     @Override
     public Iterator iterator() {
-        return null;
+        return new SimpleHashSetIterator();
     }
 
     @Override
