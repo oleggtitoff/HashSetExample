@@ -1,6 +1,7 @@
 package ua.training;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SimpleHashSet<E> implements SimpleSet<E> {
     private Entry[] buckets;
@@ -95,7 +96,7 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
         Entry<E> next;
     }
 
-    public class SimpleHashSetIterator implements Iterator {
+    public class SimpleHashSetIterator<E> implements Iterator<E> {
         private int currentBucket = -1;
         private int previousBucket = -1;
         private Entry currentEntry = null;
@@ -107,7 +108,7 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
                 return true;
             }
 
-            for (int index = currentBucket+1; index < buckets.length; index++) {
+            for (int index = currentBucket + 1; index < buckets.length; index++) {
                 if (buckets[index] != null) {
                     return true;
                 }
@@ -116,9 +117,35 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
         }
 
         @Override
-        public Object next() {
-            return null;
+        public E next() {
+            previousEntry = currentEntry;
+            previousBucket = currentBucket;
+
+            if (currentEntry == null || currentEntry.next == null) {
+                currentBucket++;
+                moveThroughBuckets();
+                assignCurrentEntryIfBucketIsInRange();
+            } else {
+                currentEntry = currentEntry.next;
+            }
+            return (E) currentEntry.key;
         }
+
+        private void moveThroughBuckets() {
+            while (currentBucket < buckets.length &&
+                    buckets[currentBucket] == null) {
+                currentBucket++;
+            }
+        }
+
+        private void assignCurrentEntryIfBucketIsInRange() {
+            if (currentBucket < buckets.length) {
+                currentEntry = buckets[currentBucket];
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
     }
 
 }
