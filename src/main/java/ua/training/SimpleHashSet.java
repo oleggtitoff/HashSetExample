@@ -42,7 +42,28 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean remove(E e) {
+        int index = hashFunction(e.hashCode());
+        Entry current = buckets[index];
+        Entry previous = null;
+
+        while (current != null) {
+            if (current.key.equals(e)) {
+                removeCurrent(index, current, previous);
+                size--;
+                return true;
+            }
+            previous = current;
+            current = current.next;
+        }
         return false;
+    }
+
+    private void removeCurrent(int index, Entry current, Entry previous) {
+        if (previous == null) {
+            buckets[index] = current.next;
+        } else {
+            previous.next = current.next;
+        }
     }
 
     @Override
