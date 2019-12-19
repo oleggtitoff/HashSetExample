@@ -3,8 +3,12 @@ package ua.training;
 import java.util.Iterator;
 
 public class SimpleHashSet<E> implements SimpleSet<E> {
-    private Entry<E>[] buckets;
+    private Entry[] buckets;
     private int size = 0;
+
+    public SimpleHashSet(int capacity) {
+        buckets = new Entry[capacity];
+    }
 
     @Override
     public boolean add(E e) {
