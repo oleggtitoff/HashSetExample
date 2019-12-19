@@ -68,6 +68,15 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean contains(E e) {
+        int index = hashFunction(e.hashCode());
+        Entry current = buckets[index];
+
+        while (current != null) {
+            if (current.key.equals(e)) {
+                return true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
