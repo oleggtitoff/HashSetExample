@@ -88,7 +88,7 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     static class Entry<E> {
