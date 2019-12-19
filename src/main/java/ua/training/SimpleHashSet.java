@@ -15,6 +15,15 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
         return false;
     }
 
+    private int hashFunction(int hashCode) {
+        int index = hashCode;
+
+        if (index < 0) {
+            index = -index;
+        }
+        return index % buckets.length;
+    }
+
     @Override
     public boolean remove(E e) {
         return false;
