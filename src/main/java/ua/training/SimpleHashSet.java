@@ -12,7 +12,23 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean add(E e) {
-        return false;
+        int index = hashFunction(e.hashCode());
+        Entry current = buckets[index];
+
+        while (current != null) {
+            if (current.key.equals(e)) {
+                return false;
+            }
+            current = current.next;
+        }
+
+        Entry entry = new Entry();
+
+        entry.key = e;
+        entry.next = buckets[index];
+        buckets[index] = entry;
+        size++;
+        return true;
     }
 
     private int hashFunction(int hashCode) {
