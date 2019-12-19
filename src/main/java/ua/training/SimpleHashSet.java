@@ -1,5 +1,6 @@
 package ua.training;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -89,6 +90,46 @@ public class SimpleHashSet<E> implements SimpleSet<E> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        appendBuckets(stringBuffer);
+        return stringBuffer.toString();
+    }
+
+    private void appendBuckets(StringBuffer stringBuffer) {
+        for (int index = 0; index < buckets.length; index++) {
+            appendIfBucketIsNotEmpty(stringBuffer, index);
+        }
+    }
+
+    private void appendIfBucketIsNotEmpty(StringBuffer stringBuffer, int index) {
+        Entry currentEntry;
+
+        if (buckets[index] != null) {
+            currentEntry = buckets[index];
+            appendIndex(stringBuffer, index);
+            stringBuffer.append(currentEntry.key.toString());
+            appendEntryWhileIsNext(currentEntry, stringBuffer);
+            stringBuffer.append('\n');
+        }
+    }
+
+    private void appendIndex(StringBuffer stringBuffer, int index) {
+        stringBuffer.append("[");
+        stringBuffer.append(index);
+        stringBuffer.append("] ");
+    }
+
+    private void appendEntryWhileIsNext(Entry currentEntry, StringBuffer stringBuffer) {
+        while (currentEntry.next != null) {
+            currentEntry = currentEntry.next;
+            stringBuffer.append(" -> ");
+            stringBuffer.append(currentEntry.key.toString());
+        }
     }
 
     static class Entry<E> {
